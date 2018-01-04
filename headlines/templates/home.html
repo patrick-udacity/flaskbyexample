@@ -6,6 +6,14 @@
 
     <body>
         <h1>Headlines</h1>
+        <h2>Current weather</h2>
+        <form>
+            <input type="text" name="city" placeholder="weather search">
+            <input type="submit" value="Submit">
+        </form>            
+        <p>City: <b>{{weather.city}}, {{weather.country}}</b></p>
+        <p>{{weather.description}} | Current Temp: {{weather.temperature}}&#8457 ({{temperatureCel}}&#8451;)</p>
+        <h2>Headlines</h2>
         <form>
             <input type="text" name="publication" placeholder="News Site" />
             <input type="submit" value="Submit" />
@@ -17,6 +25,7 @@
             <a href="{{article.link}}" target="_blank">Full Story</a>
             <hr>
         {% endfor %}
+        
     </body>
 
 </html>
