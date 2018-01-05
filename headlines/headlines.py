@@ -16,6 +16,8 @@ RSS_FEEDS = {'bbc': 'http://feeds.bbci.co.uk/news/rss.xml',
 
 #weather APIID: da5610aabb7d8e2e8ec57ef2a74a263c
 WEATHER_URL = "http://api.openweathermap.org/data/2.5/weather?q={}&units=imperial&appid=da5610aabb7d8e2e8ec57ef2a74a263c"
+
+#Currency APPID
 CURRENCY_URL = "https://openexchangerates.org//api/latest.json?app_id=b23c94daab584f4580e4e2bf75cbcf7e"
 
 DEFAULTS = {'publication': 'bbc',
@@ -31,6 +33,7 @@ def home():
     if not publication:
         publication = DEFAULTS['publication']
     articles = get_news(publication)
+
     # get customized weather based on user input or default
     city = request.args.get('city')
     if not city:
@@ -40,14 +43,33 @@ def home():
     temperatureCel =  (weather['temperature'] - 32) * 5.0/9.0
     temperatureCel= str(round(temperatureCel, 2))
 
+    # get customised currency based on user input or default
+    currency_from = request.args.get("currency_from")
+    if not currency_from:
+        currency_from = DEFAULTS['currency_from']
+    currency_to = request.args.get("currency_to")
+    if not currency_to:
+        currency_to = DEFAULTS['currency_to']
+    rate, currencies = get_rate(currency_from, currency_to)
+
     return render_template("home.html", articles=articles,
         weather=weather,
-        temperatureCel=temperatureCel)
+        temperatureCel=temperatureCel,
+        currency_from=currency_from, 
+        currency_to=currency_to, rate=rate,
+        currencies=sorted(currencies)
+        )
+
+def get_rate(frm, to):
+    all_currency = urllib2.urlopen(CURRENCY_URL).read()
+    parsed = json.loads(all_currency).get('rates')
+    frm_rate = parsed.get(frm.upper())
+    to_rate = parsed.get(to.upper())
+    return (to_rate / frm_rate, parsed.keys())
 
 def get_news(publication):
     feed = feedparser.parse(RSS_FEEDS[publication])
     return feed['entries']
-
 
 def get_weather(query):
     query = urllib.quote(query)
