@@ -19,7 +19,7 @@ WEATHER_URL = "http://api.openweathermap.org/data/2.5/weather?q={}&units=imperia
 CURRENCY_URL = "https://openexchangerates.org//api/latest.json?app_id=b23c94daab584f4580e4e2bf75cbcf7e"
 
 DEFAULTS = {'publication': 'bbc',
-            'city': 'London,UK',
+            'city': 'Memphis,US',
             'currency_from': 'GBP',
             'currency_to': 'USD'
             }
