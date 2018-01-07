@@ -15,10 +15,13 @@ RSS_FEEDS = {'bbc': 'http://feeds.bbci.co.uk/news/rss.xml',
 }
 
 #weather APIID: da5610aabb7d8e2e8ec57ef2a74a263c
-WEATHER_URL = "http://api.openweathermap.org/data/2.5/weather?q={}&units=imperial&appid=da5610aabb7d8e2e8ec57ef2a74a263c"
+WEATHER_URL = ("http://api.openweathermap.org/data/2.5/weather?q={}" +
+    "&units=imperial&appid=da5610aabb7d8e2e8ec57ef2a74a263c"
+)
 
 #Currency APPID
-CURRENCY_URL = "https://openexchangerates.org//api/latest.json?app_id=b23c94daab584f4580e4e2bf75cbcf7e"
+CURRENCY_URL = ("https://openexchangerates.org//api/latest.json" + 
+    "?app_id=b23c94daab584f4580e4e2bf75cbcf7e")
 
 DEFAULTS = {'publication': 'bbc',
             'city': 'Memphis,US',
@@ -89,11 +92,14 @@ def get_weather(query):
     data = urllib2.urlopen(url).read()
     parsed = json.loads(data)
     weather = None
+    #pdb.set_trace();
     if parsed.get('weather'):
         weather = {'description': parsed['weather'][0]['description'],
                    'temperature': parsed['main']['temp'],
                    'city': parsed['name'],
-                   'country': parsed['sys']['country']
+                   'country': parsed['sys']['country'],
+                   'sunrise': datetime.datetime.fromtimestamp(parsed['sys']['sunrise']).strftime('%I:%M%p'),
+                   'sunset': datetime.datetime.fromtimestamp(parsed['sys']['sunset']).strftime('%I:%M%p')
                    }
     return weather
 
