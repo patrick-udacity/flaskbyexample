@@ -1,7 +1,7 @@
 <html>
 
     <head>
-        <title> Headlines</title>
+        <title>Headlines and Weather</title>
         <link rel=stylesheet type=text/css 
             href="{{ url_for('static', filename='styles.css') }}"
         >
@@ -24,7 +24,8 @@
             <p>City: <b>{{weather.city}}, {{weather.country}}</b></p>
             <p>{{weather.description}} | 
                 Current Temp: {{weather.temperature}}&#8457 
-                ({{temperatureCel}}&#8451;)
+                ({{temperatureCel}}&#8451;) | 
+                Sunrise: {{weather.sunrise}} and Sunset: {{weather.sunset}}
             </p>
             <h2>Currency</h2>
             <form>
