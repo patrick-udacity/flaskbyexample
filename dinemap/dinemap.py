@@ -27,6 +27,15 @@ def add():
         print e
     return home()
 
+@app.route("/submitDiningEvent", methods=['POST'])
+def submitDiningEvent():
+    category = request.form.get("category")
+    date = request.form.get("date")
+    latitude = float(request.form.get("latitude"))
+    longitude = float(request.form.get("longitude"))
+    description = request.form.get("description")
+    DB.add_diningEvent(category, date, latitude, longitude, description)
+    return home()
 
 @app.route("/clear")
 def clear():
