@@ -21,8 +21,23 @@
       google.maps.event.addListener(map, 'click',
         function(event){
           placeMarker(event.latLng);
-        });   
+        });
+        placeDiningEvents({{diningEvents | safe}});
     }
+
+    function placeDiningEvents(diningEvents) {
+      for (i=0; i<diningEvents.length; i++) {
+        diningEvent = new google.maps.Marker( {
+          position: new google.maps.LatLng(diningEvents[i].latitude, diningEvents[i].longitude),
+          map: map,
+          title: diningEvents[i].description + "\n" + "Category: " +
+          diningEvents[i].category + "\n" + "Date: " + 
+          diningEvents[i].date
+          }
+        );
+      }
+    }
+    
 
     function placeMarker(location) {
       if (marker) {

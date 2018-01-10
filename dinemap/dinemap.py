@@ -2,6 +2,7 @@ from dbhelper import DBHelper
 from flask import Flask
 from flask import render_template
 from flask import request
+import json
 
 
 app = Flask(__name__)
@@ -11,11 +12,12 @@ DB = DBHelper()
 @app.route("/")
 def home():
     try:
-        data = DB.get_all_inputs()
+        diningEvents = DB.get_all_diningEvents()
+        diningEvents = json.dumps(diningEvents)
     except Exception as e:
         print e
         data = e
-    return render_template("home.html", data=data)
+    return render_template("home.html", diningEvents=diningEvents)
 
 
 @app.route("/add", methods=["POST","GET"])
