@@ -62,22 +62,24 @@
 
 <div id="newdiningeventform">
   <h2>Submit a New Dining Experience</h2>
+  {% if error_message %}
+  < div id="error">
+    <p>{{error_message}}</p>
+  </div>
+  {% endif %}
   <form action="/submitDiningEvent" method="POST">
     <label for="category">Food Style</label>
-    <select name="category" id="category">
-      <option value="Asian">Asian</option>
-      <option value="Breakfast">Breakfast</option>
-      <option value="BBQ">BBQ</option>
-      <option value="Italian">Italian</option>
-      <option value="PubGrub">Pub Grub</option>
-      <option value="Seafood">Seafood</option>
+    <select name="category" id=category">
+      {% for key, value in categories.iteritems() | sort %}
+        <option value="{{key}}">{{value}}</option>
+      {% endfor %}
     </select>
     <label for="date">Date</label>
     <input name="date" id="date" type="date">
     <label for="latitude">Latitude</label>
-    <input name="latitude" id="latitude" type="text">
+    <input name="latitude" id="latitude" type="text" readonly>
     <label for="longitude">Longitude</label>
-    <input name="longitude" id="longitude" type="text">
+    <input name="longitude" id="longitude" type="text" readonly>
     <label for="description">Description</label>
     <textarea name="description" id="description class="diningDetails"
       placeholder="A brief but detailed description of the dining event."
