@@ -1,3 +1,5 @@
+import os  
+os.environ['PYTHON_EGG_CACHE'] = '/tmp' # a writable directory
 from dbhelper import DBHelper
 from flask import Flask
 from flask import render_template
